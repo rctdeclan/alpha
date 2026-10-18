@@ -1,5 +1,9 @@
 # Alpha
 
+Private source repository: [rctdeclan/alpha](https://github.com/rctdeclan/alpha),
+branch `main`. Publishing the repository does not itself configure a Codex Cloud
+environment or deployment.
+
 Minimal React drawing application. `ALPHA.md` is the product specification;
 `CURRENT.md` records the current task and verification.
 

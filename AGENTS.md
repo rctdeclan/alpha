@@ -44,5 +44,6 @@ implement it. Work in small experiential steps and stop for inspection when aske
 - Update ARCHITECTURE.md/ROADMAP.md when implementation status changes. Keep
   CURRENT.md factual: a past local browser/server session does not survive a clone.
 - Do not commit `node_modules/` or `dist/`. Local screenshots, chat attachments
-  and machine-specific paths are not runtime dependencies. No cloud environment,
-  hosting or remote Git publication has been configured by these docs.
+  and machine-specific paths are not runtime dependencies. The private GitHub
+  repository is linked in README.md; cloud environment and hosting setup remain
+  separate from publishing the source.

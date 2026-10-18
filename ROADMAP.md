@@ -70,8 +70,10 @@ they do not establish constraints, navigation, refinement or body modelling.
 
 The project was a local directory without Git history at the start of this
 review. A local baseline commit captures its existing files before documentation
-changes. No remote repository, push, cloud environment or deployment is configured
-by this work. The reviewed source is portable React/Vite; local image attachments,
+changes. The project and documentation were then published to the private
+[rctdeclan/alpha](https://github.com/rctdeclan/alpha) repository on `main`, following
+the user’s additional request. Local `origin` tracks that repository. No Codex
+Cloud environment or deployment was configured. The source is portable React/Vite; local image attachments,
 prior browser contents and an already-running dev server are not required assets.
 
 Drawings are memory-only and disappear on reload. Save/load, undo/redo, CI and

@@ -14,8 +14,11 @@ Documentation complete. No application, dependency or test behavior changed.
 Tests rerun: 46 passed. Production build passed with Node.js 22.14.0.
 No fresh visual verification was needed or claimed for this documentation-only step.
 The directory initially had no Git repository; an initial local baseline commit
-captures the unchanged existing project. Remote publication is awaiting GitHub
-authentication; no successful push is claimed yet.
+captures the unchanged existing project. Migration documentation was committed
+as `23e29ae`. The project and documentation were successfully pushed to the private
+[rctdeclan/alpha](https://github.com/rctdeclan/alpha) repository on `main`; `origin`
+tracks that repository. GitHub CLI authentication was authorized by the user.
+Codex Cloud environment creation/access has not been configured or verified.
 
 The previous milestone record below is historical evidence, not live server state.
 
