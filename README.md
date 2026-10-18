@@ -1,11 +1,19 @@
 # Alpha
 
 Minimal React drawing application. `ALPHA.md` is the product specification;
-`CURRENT.md` records the implemented step and verification.
+`CURRENT.md` records the current task and verification.
+
+Project context for a new agent:
+
+- [AGENTS.md](AGENTS.md): persistent instructions and non-negotiable decisions.
+- [ALPHA.md](ALPHA.md): product vision, interaction philosophy and styling.
+- [ARCHITECTURE.md](ARCHITECTURE.md): implemented data structures and behavior.
+- [ROADMAP.md](ROADMAP.md): delivered increments, partial foundations and future work.
 
 ## Development
 
-Use Node.js 22.12+ (or 20.19+).
+Use Node.js 22.13+ on the Node 22 line (or a compatible newer release).
+The migration review ran on Node.js 22.14.0.
 
 ```sh
 npm ci

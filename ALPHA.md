@@ -13,6 +13,19 @@
 > plans, status and compromises. Do not rewrite Alpha's principles
 > merely to accommodate implementation.
 
+## Reading this specification
+
+This document describes product intent, including substantial future work. It is
+not a list of implemented features. Read [ARCHITECTURE.md](ARCHITECTURE.md) for
+actual behavior, [ROADMAP.md](ROADMAP.md) for completion status, and
+[AGENTS.md](AGENTS.md) for persistent development instructions.
+
+The migration review on 2026-10-18 preserved the original vision below and added
+established decisions from the available development conversation: independent
+curves, the dark separated view styling, and column-based command autocomplete.
+Temporary prototype exceptions are identified explicitly; examples of future
+operations do not mean those operations exist.
+
 ## 1. Central idea
 
 Alpha lets a person **draw first and progressively give that drawing
@@ -72,6 +85,12 @@ Both are first-class and interactive. Hover/select linked geometry in
 either and reveal its counterpart in the other.
 
 Do not add permanent extra Front/Top/Side thumbnails.
+
+The current shell uses equal-width panels, separated and inset so the darker
+background remains visible. The left contains the Sheet drawing; the right is
+currently empty apart from its grid. Do not interpret that empty view as a
+request to implement 3D. Stored drawing positions remain stable when the window
+resizes; current viewport mechanics and limitations are in ARCHITECTURE.md.
 
 ### View sphere
 
@@ -299,6 +318,24 @@ This locality invariant is central.
 
 When a position moves, its trajectory initially keeps its world
 direction unless another relationship says otherwise.
+
+### Independent curves and selection
+
+Curves must be first-class objects: finish one, start another, and select either
+independently. Preserve document-owned positions and curve-local trajectory
+state so points can later be shared without implicitly sharing trajectories.
+Selection is not a topology-changing action: it must not connect existing
+points, insert points, or silently resume a finished curve.
+
+The current incremental workflow creates new points while drawing a curve.
+Creating standalone points, connecting pre-existing points and explicitly
+inserting/refining a curve remain distinct interaction questions; they have
+not all been implemented or given final gestures. Do not treat the current
+append workflow as the complete intended 2D editor.
+
+Direct trajectory editing uses a minimal line through the selected point only.
+Dragging it changes direction without moving P. Do not expose conventional
+Bézier handles or make drag distance a trajectory-length control.
 
 ### Pulling and correction
 
@@ -550,6 +587,31 @@ Semantic colour belongs primarily to geometry: restrained cyan/blue
 selection, amber inference/unresolved state, violet free drawing/Sheets,
 green satisfied relation, coral/red subtraction/conflict.
 
+### Established prototype styling
+
+The later user-supplied editor reference established a darker surround, slightly
+lighter separate view panels, and subdued grids in both columns. Preserve this
+implemented palette rather than reverting to the generic starting tokens above:
+
+| Element | Established value |
+| --- | --- |
+| Outer background / autocomplete area | `#080808` |
+| View panels / command input strip | `#111111` |
+| Minor grid, every 8px | `#141414`, 1px lines |
+| Major grid, every 40px | `#191919`, 1px lines |
+| Main / secondary text | `#ececeb` / `#777876` |
+| Subtle separators | `#242527` |
+| Outer padding / gap between panels and command row | 12px |
+| View corner radius / command corner radius | 3px / 0px |
+| Command input row | 40px high |
+| Autocomplete active part / unresolved feedback | `#9fbfc6` / `#bfa579` |
+| Autocomplete alternative text | `#686967` |
+
+These are the current established design values, not immutable physical units.
+The pink surround, flamingo model, floating tools and menus in the reference
+image were not added to Alpha. The reference supplied visual direction, not
+permission to add modelling controls. No image attachment is a runtime asset.
+
 ### Typography
 
 Operator Mono is a visual reference if appropriately licensed/installed.
@@ -649,6 +711,41 @@ measure C8
 
 Do not make it a rounded search field.
 
+### Column-based autocomplete decision
+
+The later command prototype request refines the simple suggestion sketch above:
+each part of a command has its own vertical column of possible values. Every
+selected value must sit on exactly the same horizontal baseline, reading as one
+continuous command sentence. Alternatives appear above and below that shared
+row; do not build a conventional dropdown, boxes, rounded cards or form controls
+for individual parts.
+
+Typing filters/selects the command column. Space and subsequent tokens introduce
+additional columns. Preserve ordinary editable text in the command line beneath
+the columns, including text that does not parse as a command. Use spacing,
+subtle lines and restrained semantic color. Operations may be italic; object
+IDs and values stay upright.
+
+The first prototype deliberately uses these fake grammars:
+
+```text
+connect  <from> <to>
+move     <target> <direction> <distance>
+keep     <property> <view>
+show     <subject>
+go       <destination>
+insert   <point> <curve>
+subtract <body> <body>
+```
+
+Grammar definitions and value providers must be separate from presentation so
+real document objects can be connected later. The current Space/Tab, arrow-key
+and pointer interactions are documented in ARCHITECTURE.md. Enter only displays
+the parsed command or diagnostic and “not implemented.” This is a user-requested,
+explicitly labelled prototype exception to the real-action invariant, not a
+claim that these modelling operations exist. It must not change geometry.
+These example grammars are not a final language specification.
+
 ## 17. Cyberdeck
 
 Alpha is intended to complement a flat wooden cyberdeck with side
@@ -725,7 +822,9 @@ Alpha's distinction:
     relationships after construction.
 4.  **Locality.** Curve edits affect the smallest meaningful
     neighbourhood unless explicit relationships propagate them.
-5.  **Commands are real actions.** Do not create fake command entries.
+5.  **Commands are real actions.** Do not present fake entries as working
+    operations. The explicitly requested, labelled autocomplete prototype in
+    §16 is a temporary exception; execution remains unimplemented.
 6.  **UI follows geometry semantics.** Do not add modes/panels merely
     because implementation is easier.
 
@@ -740,8 +839,11 @@ Codex does the heavy implementation work in experiential milestones.
 Maintain:
 
 ``` text
-ALPHA.md      authoritative product/design principles
-CURRENT.md    current implementation milestone/status
+AGENTS.md        concise persistent agent instructions
+ALPHA.md         authoritative product/design principles
+ARCHITECTURE.md  actual implementation and data structures
+ROADMAP.md       completed, partial and planned features
+CURRENT.md       current task, acceptance and validation
 ```
 
 Before each milestone:

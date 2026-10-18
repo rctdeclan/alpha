@@ -1,4 +1,27 @@
-# Current step: command sentence autocomplete prototype
+# Current step: preserve migration context and publish repository
+
+## Acceptance
+
+- Review the available conversation, product specification, source and tests.
+- Keep AGENTS.md concise; link to product intent, actual architecture and roadmap.
+- Preserve established viewport, command, P/T, curve-selection and styling decisions.
+- Separate implemented behavior, representation-only foundations and future proposals.
+- Change documentation only; commit it and publish a private repository as requested.
+
+## Status — 2026-10-18
+
+Documentation complete. No application, dependency or test behavior changed.
+Tests rerun: 46 passed. Production build passed with Node.js 22.14.0.
+No fresh visual verification was needed or claimed for this documentation-only step.
+The directory initially had no Git repository; an initial local baseline commit
+captures the unchanged existing project. Remote publication is awaiting GitHub
+authentication; no successful push is claimed yet.
+
+The previous milestone record below is historical evidence, not live server state.
+
+---
+
+## Previous milestone: command sentence autocomplete prototype
 
 ## Acceptance
 
@@ -21,7 +44,7 @@ Implemented and ready for inspection. ALPHA.md and the geometry implementation a
 - All 46 automated tests pass, including a React regression test for rapid pointer → Tab → Arrow navigation. The production build passes.
 - Verified in the live in-app browser: partial command completion, progressive columns, all seven parsed sentences, ordinary text, pointer selection, arrow/Tab navigation, backtracking, Escape, and Enter feedback. Measured all four selected words at exactly the same top position (739px), height (26px), and line height (26px). Inspected the rendered dark, flat design.
 - Existing live drawing SVG markup remained identical through the command interactions. No page reload or geometry edit was needed. Existing 39 geometry/state/interaction tests still pass.
-- Development app remains running at http://127.0.0.1:8765/ with a four-column example visible for evaluation. Stopping here.
+- At the end of that local milestone, the app was running with a four-column example. This is historical context; no running process or browser state is assumed after migration.
 
 ## Running
 
