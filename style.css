@@ -1,0 +1,196 @@
+:root {
+  color-scheme: dark;
+  --bg-0: #080808;
+  --bg-1: #111111;
+  --grid-minor: #141414;
+  --grid-major: #191919;
+  --workspace-gap: 12px;
+  --fg-0: #ececeb;
+  --fg-2: #777876;
+  --line-soft: #242527;
+  font-family: "Operator Mono", "IBM Plex Mono", "SFMono-Regular", "Cascadia Mono", "Menlo", monospace;
+  font-size: 13px;
+  color: var(--fg-0);
+  background: var(--bg-0);
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+#root {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 40px;
+  gap: var(--workspace-gap);
+  padding: var(--workspace-gap);
+  overflow: hidden;
+}
+
+.views {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 0;
+  gap: var(--workspace-gap);
+}
+
+.drawing-space {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+
+/* Both views share a Sheet-aligned grid, sampled from the reference image. */
+.drawing-space,
+.second-view {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background-color: var(--bg-1);
+  background-image:
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+}
+
+.command-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: var(--bg-1);
+  border-radius: 3px;
+}
+
+.command-line label { color: var(--fg-2); }
+.command-line:focus-within label { color: var(--fg-0); }
+
+.command-line input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.drawing-space {
+  touch-action: none;
+  user-select: none;
+  outline: none;
+}
+
+.drawing-point {
+  fill: var(--fg-2);
+  stroke: transparent;
+  stroke-width: 14px;
+  pointer-events: all;
+  cursor: move;
+}
+
+.drawing-point.selected { fill: var(--fg-0); }
+
+.drawing-curve {
+  fill: none;
+  stroke: var(--fg-2);
+  stroke-width: 1.5px;
+  pointer-events: none;
+}
+
+.drawing-curve.selected { stroke: var(--fg-0); }
+
+.curve-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 12px;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.trajectory-hit {
+  stroke: transparent;
+  stroke-width: 14px;
+  pointer-events: stroke;
+  cursor: crosshair;
+}
+
+.trajectory-line {
+  stroke: var(--fg-2);
+  stroke-width: 1px;
+  stroke-dasharray: 3 3;
+  pointer-events: none;
+}
+
+.command-area { position: relative; min-width: 0; }
+.command-area .command-line { height: 100%; border-radius: 0; }
+.command-line input::placeholder { color: var(--fg-2); }
+
+/* Shared row sizes keep every chosen word on the same sentence baseline. */
+.command-completion {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 16px 12px 10px 30px;
+  background: var(--bg-0);
+}
+.command-columns {
+  display: flex;
+  align-items: start;
+  gap: 24px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-soft) transparent;
+}
+.command-column {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-rows: 24px repeat(5, 26px);
+  min-width: 7ch;
+}
+.command-part-name { color: var(--fg-2); font-size: 10px; line-height: 18px; }
+.command-choice {
+  white-space: pre;
+  color: #686967;
+  line-height: 26px;
+  cursor: pointer;
+  user-select: none;
+}
+.command-choice.verb { font-style: italic; }
+.command-choice.chosen { color: var(--fg-0); }
+.command-column.current .chosen { color: #9fbfc6; }
+.command-choice.chosen.unresolved { color: #bfa579; }
+.command-choice[role="option"]:hover { color: var(--fg-0); }
+.command-column.current .command-part-name { color: #9fbfc6; }
+.command-choice.chosen { border-bottom: 1px solid var(--line-soft); }
+.command-guidance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 12px;
+  color: var(--fg-2);
+  font-size: 10px;
+  line-height: 16px;
+}
+.command-guidance span { margin-left: auto; }
+.command-result {
+  display: block;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  padding: 12px 30px;
+  background: var(--bg-0);
+  color: #bfa579;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
